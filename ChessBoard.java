@@ -5,20 +5,24 @@
 
 
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+
 
 public class ChessBoard extends JFrame {
 
 	JFrame board = new JFrame();
-	JPanel squares[][] = new JPanel[8][8];
+	JButton squares[][] = new JButton[8][8];  // was JPanel
 
  
 
@@ -52,17 +56,22 @@ public class ChessBoard extends JFrame {
       * alternating between black and white squares
       * 	    
       */
+     ListenerClass[][] test = new ListenerClass[8][8]; // Init listeners for all button squares.
      for (int i = 0; i < 8; i++) {
     	 for (int j = 0; j < 8; j++) {
-    		 squares[i][j] = new JPanel();
+    		 squares[i][j] = new JButton();  // was JPanel
     		 if ((i + j) % 2 == 0) {
     			 squares[i][j].setBackground(Color.blue);
+    			 
     		 } else {
     			 squares[i][j].setBackground(Color.white);
              }   
+    		 
+          	 board.add(squares[i][j]);//add the chess board to the frame
 
-             board.add(squares[i][j]);//add the chess board to the frame
-
+     		 // Reg listeners for all button squares.
+    		 squares[i][j].addActionListener(test[i][j]); 
+    		 
     	 }
      }
 
@@ -147,6 +156,11 @@ public class ChessBoard extends JFrame {
      squares[0][5].add(p2bishop2.getBishop());
      squares[0][3].add(p2queen.getQueen());
      squares[0][4].add(p2king.getKing());
+     
+     
+     
+
+     
      
  }
 
