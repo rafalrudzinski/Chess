@@ -3,6 +3,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,7 +22,7 @@ public class Pawn extends JPanel{
 	JPanel pawn;
 	JButton pawnJbt;
 	ImageIcon pawnIcon;
-
+    ListenerClass regListener = new ListenerClass();
 	
 	Pawn(int player) throws IOException{
 		this.player = player;
@@ -41,7 +42,8 @@ public class Pawn extends JPanel{
 		pawnJbt.setOpaque(false);
 		pawnJbt.setContentAreaFilled(false);
 		pawnJbt.setBorderPainted(false);
-
+		
+		pawnJbt.addActionListener(regListener);  // Register a listener for this button.
 		
 	}
 	
@@ -52,5 +54,6 @@ public class Pawn extends JPanel{
 	public JButton getPawn(){
 		return pawnJbt;
 	}
+	
 	
 }
