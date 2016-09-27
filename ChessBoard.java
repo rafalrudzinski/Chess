@@ -82,6 +82,15 @@ public class ChessBoard extends JFrame {
      Pawn p1pawn7 = new Pawn(1);
      Pawn p1pawn8 = new Pawn(1);
      
+     Rook p1rook1 = new Rook(1);
+     Rook p1rook2 = new Rook(1);
+     Knight p1knight1 = new Knight(1);
+     Knight p1knight2 = new Knight(1);
+     Bishop p1bishop1 = new Bishop(1);
+     Bishop p1bishop2 = new Bishop(1);
+     Queen p1queen = new Queen(1);
+     King p1king = new King(1);
+     
      squares[6][0].add(p1pawn1.getPawn());
      squares[6][1].add(p1pawn2.getPawn());
      squares[6][2].add(p1pawn3.getPawn());
@@ -91,9 +100,17 @@ public class ChessBoard extends JFrame {
      squares[6][6].add(p1pawn7.getPawn());
      squares[6][7].add(p1pawn8.getPawn());
      
+     squares[7][0].add(p1rook1.getRook());
+     squares[7][7].add(p1rook2.getRook());
+     squares[7][1].add(p1knight1.getKnight());
+     squares[7][6].add(p1knight2.getKnight());
+     squares[7][2].add(p1bishop1.getBishop());
+     squares[7][5].add(p1bishop2.getBishop());
+     squares[7][3].add(p1queen.getQueen());
+     squares[7][4].add(p1king.getKing());
      
 	 /*
-	  * Create the objects for Player 1 to start the game. 
+	  * Create the objects for Player 2 to start the game. 
 	  */
      Pawn p2pawn1 = new Pawn(2);
      Pawn p2pawn2 = new Pawn(2);
@@ -103,6 +120,15 @@ public class ChessBoard extends JFrame {
      Pawn p2pawn6 = new Pawn(2);
      Pawn p2pawn7 = new Pawn(2);
      Pawn p2pawn8 = new Pawn(2);
+     Queen p2queen = new Queen(2);
+     King p2king = new King(2);
+     
+     Rook p2rook1 = new Rook(2);
+     Rook p2rook2 = new Rook(2);
+     Knight p2knight1 = new Knight(2);
+     Knight p2knight2 = new Knight(2);
+     Bishop p2bishop1 = new Bishop(2);
+     Bishop p2bishop2 = new Bishop(2);
      
      squares[1][0].add(p2pawn1.getPawn());
      squares[1][1].add(p2pawn2.getPawn());
@@ -112,6 +138,15 @@ public class ChessBoard extends JFrame {
      squares[1][5].add(p2pawn6.getPawn());
      squares[1][6].add(p2pawn7.getPawn());
      squares[1][7].add(p2pawn8.getPawn());
+     
+     squares[0][0].add(p2rook1.getRook());
+     squares[0][7].add(p2rook2.getRook());
+     squares[0][1].add(p2knight1.getKnight());
+     squares[0][6].add(p2knight2.getKnight());
+     squares[0][2].add(p2bishop1.getBishop());
+     squares[0][5].add(p2bishop2.getBishop());
+     squares[0][3].add(p2queen.getQueen());
+     squares[0][4].add(p2king.getKing());
      
  }
 
