@@ -1,15 +1,35 @@
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class Bishop extends Piece {
-	int color;
-	static ImageIcon white; 
-	static ImageIcon black;
-		
-	public Bishop() {
-		super(white = new ImageIcon("src/images/d1_60x60_Bishop1.png"));
+
+public class Bishop extends JPanel{
+	int player = -1;
+	BufferedImage BishopImg;
+	JPanel bishop;
+	JLabel bishopJbt;
+	ImageIcon bishopIcon;
+
+
+	Bishop(int player) throws IOException{
+		this.player = player;
+		if (this.player == 1) {
+			bishopIcon = new ImageIcon("images/d1_60x60_Bishop1.png");
+		}
+		else if (this.player == 2) {
+			bishopIcon = new ImageIcon("images/d1_60x60_Bishop2.png");
+		}
+
+		bishopJbt = new JLabel(bishopIcon);
+		bishopJbt.setSize(100, 100);
+		bishopJbt.setOpaque(false);
 	}
-		
-	public Bishop(int color) {
-		super(black = new ImageIcon("src/images/d1_60x60_Bishop2.png"));
+
+	public void setBishop() throws IOException{
+	}
+	public JLabel getBishop(){
+		return bishopJbt;
 	}
 }
