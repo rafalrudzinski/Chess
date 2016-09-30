@@ -1,146 +1,210 @@
 import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.util.*;
 import javax.swing.*;
+ 
+public class ChessBoard extends JFrame implements MouseListener, MouseMotionListener {
+  JLayeredPane layeredPane;
+  JPanel chessBoard;
+  JLabel chessPiece;
+  int xAdjustment;
+  int yAdjustment;
+ 
+  public ChessBoard() throws IOException{
+  Dimension boardSize = new Dimension(600, 600);
+ 
+  //  Use a Layered Pane for this this application
+ layeredPane = new JLayeredPane();
+  getContentPane().add(layeredPane);
+  layeredPane.setPreferredSize(boardSize);
+  layeredPane.addMouseListener(this);
+  layeredPane.addMouseMotionListener(this);
+  //Add a chess board to the Layered Pane 
+ 
+  chessBoard = new JPanel();
+  layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
+  chessBoard.setLayout( new GridLayout(8, 8) );
+  chessBoard.setPreferredSize( boardSize );
+  chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
+ 
+  for (int i = 0; i < 64; i++) {
+  JPanel square = new JPanel( new BorderLayout() );
+  chessBoard.add( square );
+ 
+  int row = (i / 8) % 2;
+  if (row == 0)
+  square.setBackground( i % 2 == 0 ? Color.blue : Color.white );
+  else
+  square.setBackground( i % 2 == 0 ? Color.white : Color.blue );
+  }
+  /*
+   * Create the objects for Player 1 to start the game. 
+   */
+  Pawn p1pawn1 = new Pawn(1,6,0);
+  Pawn p1pawn2 = new Pawn(1,6,1);
+  Pawn p1pawn3 = new Pawn(1,6,2);
+  Pawn p1pawn4 = new Pawn(1,6,3);
+  Pawn p1pawn5 = new Pawn(1,6,4);
+  Pawn p1pawn6 = new Pawn(1,6,5);
+  Pawn p1pawn7 = new Pawn(1,6,6);
+  Pawn p1pawn8 = new Pawn(1,6,7);
+  Rook p1rook1 = new Rook(1);
+  Rook p1rook2 = new Rook(1);
+  Knight p1knight1 = new Knight(1);
+  Knight p1knight2 = new Knight(1);
+  Bishop p1bishop1 = new Bishop(1);
+  Bishop p1bishop2 = new Bishop(1);
+  Queen p1queen = new Queen(1);
+  King p1king = new King(1);
+  /*
+   * Create the objects for Player 2 to start the game. 
+   */
 
-public class ChessBoard extends JFrame {
-	
-	public JLayeredPane pane;
-	public JPanel board;
-	public Square square;
-	public Pawn pawn;
-	public Queen queen;
-	public King king;
-	public Bishop bishop;
-	public Knight knight;
-	public Rook rook;
-	
-	public ChessBoard() {
-		
-		/*
-		 * create Chess Board using a JLayeredPane
-		 */
-		Dimension boardSize = new Dimension(600,600);	// size of chess board
-		pane = new JLayeredPane();
-		getContentPane().add(pane);
-		pane.setPreferredSize(boardSize);
-		
-		board = new JPanel();
-		pane.add(board, JLayeredPane.DEFAULT_LAYER);
-		board.setLayout(new GridLayout(8,8));
-		board.setPreferredSize(boardSize);
-		board.setBounds(0, 0, boardSize.width, boardSize.height);
-		
-		/*
-		 * for loop creates 64 alternating color squares on Chess board
-		 */
-		for (int i = 0; i < 64; i++) {
-			square = new Square(i);
-			board.add(square);
-			
-			// set alternating colors
-			int row = (i/8) % 2;			
-			if (row == 0) {
-				if (i % 2 == 0) {
-					square.setBackground(Color.white);
-				} else {
-					square.setBackground(Color.blue);
-				}
-			} else {
-				if (i % 2 == 0) {
-					square.setBackground(Color.blue);
-				} else {
-					square.setBackground(Color.white);
-				}
-			}
-		}
-		
-		//set up board, add pieces
-		JPanel panel;
-		
-		//kings
-		king = new King(0);
-		king.setSize(50,50);
-		panel = (JPanel)board.getComponent(59);
-		panel.add(king);
-		king = new King();
-		king.setSize(50,50);
-		panel = (JPanel)board.getComponent(3);
-		panel.add(king);
-		//queens
-		queen = new Queen(0);
-		queen.setSize(50,50);
-		panel = (JPanel)board.getComponent(4);
-		panel.add(queen);
-		queen = new Queen();
-		queen.setSize(50,50);
-		panel = (JPanel)board.getComponent(60);
-		panel.add(queen);
-		//bishops
-		bishop = new Bishop(0);
-		bishop.setSize(50,50);
-		panel = (JPanel)board.getComponent(61);
-		panel.add(bishop);
-		bishop = new Bishop(0);
-		bishop.setSize(50,50);
-		panel = (JPanel)board.getComponent(58);
-		panel.add(bishop);
-		bishop = new Bishop();
-		bishop.setSize(50,50);
-		panel = (JPanel)board.getComponent(2);
-		panel.add(bishop);
-		bishop = new Bishop();
-		bishop.setSize(50,50);
-		panel = (JPanel)board.getComponent(5);
-		panel.add(bishop);
-		//knights
-		knight = new Knight();
-		knight.setSize(50,50);
-		panel = (JPanel)board.getComponent(62);
-		panel.add(knight);
-		knight = new Knight();
-		knight.setSize(50,50);
-		panel = (JPanel)board.getComponent(57);
-		panel.add(knight);
-		knight = new Knight(0);
-		knight.setSize(50,50);
-		panel = (JPanel)board.getComponent(1);
-		panel.add(knight);
-		knight = new Knight(0);
-		knight.setSize(50,50);
-		panel = (JPanel)board.getComponent(6);
-		panel.add(knight);
-		//rooks
-		rook = new Rook(0);
-		rook.setSize(50,50);
-		panel = (JPanel)board.getComponent(0);
-		panel.add(rook);
-		rook = new Rook(0);
-		rook.setSize(50,50);
-		panel = (JPanel)board.getComponent(7);
-		panel.add(rook);
-		rook = new Rook();
-		rook.setSize(50,50);
-		panel = (JPanel)board.getComponent(56);
-		panel.add(rook);
-		rook = new Rook();
-		rook.setSize(50,50);
-		panel = (JPanel)board.getComponent(63);
-		panel.add(rook);
-		
-		//pawns
-		for (int i = 0; i < 64; i++) {
-			//pawns
-			if (i > 7 && i < 16) {
-				pawn = new Pawn(0);
-				pawn.setSize(50, 50);
-				panel = (JPanel)board.getComponent(i);
-				panel.add(pawn);
-			}
-			if (i > 47 && i < 56) {
-				pawn = new Pawn();
-				pawn.setSize(50, 50);
-				panel = (JPanel)board.getComponent(i);
-				panel.add(pawn);
-			}
-		}
-	}
+  Pawn p2pawn1 = new Pawn(2,1,0);
+  Pawn p2pawn2 = new Pawn(2,1,1);
+  Pawn p2pawn3 = new Pawn(2,1,2);
+  Pawn p2pawn4 = new Pawn(2,1,3);
+  Pawn p2pawn5 = new Pawn(2,1,4);
+  Pawn p2pawn6 = new Pawn(2,1,5);
+  Pawn p2pawn7 = new Pawn(2,1,6);
+  Pawn p2pawn8 = new Pawn(2,1,7);
+  Queen p2queen = new Queen(2);
+  King p2king = new King(2);
+  Rook p2rook1 = new Rook(2);
+  Rook p2rook2 = new Rook(2);
+  Knight p2knight1 = new Knight(2);
+  Knight p2knight2 = new Knight(2);
+  Bishop p2bishop1 = new Bishop(2);
+  Bishop p2bishop2 = new Bishop(2);
+
+  
+  //Add player 2 pieces to board
+  JPanel panel = (JPanel)chessBoard.getComponent(0);
+  panel.add(p2rook1.getRook());
+  panel = (JPanel)chessBoard.getComponent(1);
+  panel.add(p2knight1.getKnight());
+  panel = (JPanel)chessBoard.getComponent(2);
+  panel.add(p2bishop1.getBishop());
+  panel = (JPanel)chessBoard.getComponent(3);
+  panel.add(p2queen.getQueen());
+  panel = (JPanel)chessBoard.getComponent(4);
+  panel.add(p2king.getKing());
+  panel = (JPanel)chessBoard.getComponent(5);
+  panel.add(p2bishop2.getBishop());
+  panel = (JPanel)chessBoard.getComponent(6);
+  panel.add(p2knight2.getKnight());
+  panel = (JPanel)chessBoard.getComponent(7);
+  panel.add(p2rook2.getRook());
+  panel = (JPanel)chessBoard.getComponent(8);
+  panel.add(p2pawn1.getPawn());
+  panel = (JPanel)chessBoard.getComponent(9);
+  panel.add(p2pawn2.getPawn());
+  panel = (JPanel)chessBoard.getComponent(10);
+  panel.add(p2pawn3.getPawn());
+  panel = (JPanel)chessBoard.getComponent(11);
+  panel.add(p2pawn4.getPawn());
+  panel = (JPanel)chessBoard.getComponent(12);
+  panel.add(p2pawn5.getPawn());
+  panel = (JPanel)chessBoard.getComponent(13);
+  panel.add(p2pawn6.getPawn());
+  panel = (JPanel)chessBoard.getComponent(14);
+  panel.add(p2pawn7.getPawn());
+  panel = (JPanel)chessBoard.getComponent(15);
+  panel.add(p2pawn8.getPawn());
+  
+//Add player 1 pieces to board
+  panel = (JPanel)chessBoard.getComponent(56);
+  panel.add(p1rook1.getRook());
+  panel = (JPanel)chessBoard.getComponent(57);
+  panel.add(p1knight1.getKnight());
+  panel = (JPanel)chessBoard.getComponent(58);
+  panel.add(p1bishop1.getBishop());
+  panel = (JPanel)chessBoard.getComponent(59);
+  panel.add(p1queen.getQueen());
+  panel = (JPanel)chessBoard.getComponent(60);
+  panel.add(p1king.getKing());
+  panel = (JPanel)chessBoard.getComponent(61);
+  panel.add(p1bishop2.getBishop());
+  panel = (JPanel)chessBoard.getComponent(62);
+  panel.add(p1knight2.getKnight());
+  panel = (JPanel)chessBoard.getComponent(63);
+  panel.add(p1rook2.getRook());
+  panel = (JPanel)chessBoard.getComponent(48);
+  panel.add(p1pawn1.getPawn());
+  panel = (JPanel)chessBoard.getComponent(49);
+  panel.add(p1pawn2.getPawn());
+  panel = (JPanel)chessBoard.getComponent(50);
+  panel.add(p1pawn3.getPawn());
+  panel = (JPanel)chessBoard.getComponent(51);
+  panel.add(p1pawn4.getPawn());
+  panel = (JPanel)chessBoard.getComponent(52);
+  panel.add(p1pawn5.getPawn());
+  panel = (JPanel)chessBoard.getComponent(53);
+  panel.add(p1pawn6.getPawn());
+  panel = (JPanel)chessBoard.getComponent(54);
+  panel.add(p1pawn7.getPawn());
+  panel = (JPanel)chessBoard.getComponent(55);
+  panel.add(p1pawn8.getPawn());
+  
+  
+  }
+ 
+  public void mousePressed(MouseEvent e){
+  chessPiece = null;
+  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+ 
+  if (c instanceof JPanel) 
+  return;
+ 
+  Point parentLocation = c.getParent().getLocation();
+  xAdjustment = parentLocation.x - e.getX();
+  yAdjustment = parentLocation.y - e.getY();
+  chessPiece = (JLabel)c;
+  chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+  chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
+  layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+  }
+ 
+  //Move the chess piece around
+  
+  public void mouseDragged(MouseEvent me) {
+  if (chessPiece == null) return;
+ chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
+ }
+ 
+  //Drop the chess piece back onto the chess board
+ 
+  public void mouseReleased(MouseEvent e) {
+  if(chessPiece == null) return;
+ 
+  chessPiece.setVisible(false);
+  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+ 
+  if (c instanceof JLabel){
+  Container parent = c.getParent();
+  parent.remove(0);
+  parent.add( chessPiece );
+  }
+  else {
+  Container parent = (Container)c;
+  parent.add( chessPiece );
+  }
+ 
+  chessPiece.setVisible(true);
+  }
+ 
+  public void mouseClicked(MouseEvent e) {
+  
+  }
+  public void mouseMoved(MouseEvent e) {
+ }
+  public void mouseEntered(MouseEvent e){
+  
+  }
+  public void mouseExited(MouseEvent e) {
+  
+  }
+ 
+  
 }
