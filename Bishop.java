@@ -25,6 +25,7 @@ public class Bishop extends JPanel{
 		bishopJbt = new JLabel(bishopIcon);
 		bishopJbt.setSize(100, 100);
 		bishopJbt.setOpaque(false);
+		bishopJbt.setName("Bishop");
 	}
 
 	public void setBishop() throws IOException{
