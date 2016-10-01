@@ -26,6 +26,7 @@ public class Rook extends JPanel{
 		rookJbt = new JLabel(rookIcon);
 		rookJbt.setSize(100, 100);
 		rookJbt.setOpaque(false);
+		rookJbt.setName("Rook");
 
 	}
 
