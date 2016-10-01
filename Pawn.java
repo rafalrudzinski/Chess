@@ -5,6 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 
+
+
+
 public class Pawn extends JPanel{
 	int player = -1;
 	BufferedImage pawnImg;
@@ -12,13 +15,13 @@ public class Pawn extends JPanel{
 	JLabel pawnJbt;
 	ImageIcon pawnIcon;
     int x,y;
+        
+
 
 	Pawn(int player, int x, int y) throws IOException{
-
 		this.player = player;
         this.x=x;
         this.y=y;
-
 
 		if (this.player == 1) {
 			pawnIcon = new ImageIcon("images/d1_60x60_Pawn1.png");
@@ -28,26 +31,26 @@ public class Pawn extends JPanel{
 			pawnIcon = new ImageIcon("images/d1_60x60_Pawn2.png");
 		}
 
+
 		//JPanel pawn = new JPanel();
 		//pawn.setSize(100,100);
+
+
 
 		pawnJbt = new JLabel(pawnIcon);
 		pawnJbt.setSize(100, 100);
 		pawnJbt.setOpaque(false);
+	    pawnJbt.setName("Pawn");
 		//pawnJbt.setContentAreaFilled(false);
 		//pawnJbt.setBorderPainted(false);
 	   // pawnJbt.addActionListener(regListener);  // Register a listener for this button.
 
-		
+
 
 	}
 
-	
-
-
 
 	public void setPawn() throws IOException{
-
 	}
     public int getX(){
     	return x;
@@ -68,4 +71,3 @@ public class Pawn extends JPanel{
 
 
 }
-
