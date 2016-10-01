@@ -149,11 +149,20 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   
   
   }
+  public boolean isValidMove(int x, int y, String name){
+	  boolean move = false;
+	  if (name.equals("Pawn")){
+		  move = true;
+	  }
+	  
+	  return move;
+  }
  
   public void mousePressed(MouseEvent e){
   chessPiece = null;
-  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
- 
+    Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+    
+  String name = c.getName();
   if (c instanceof JPanel) 
   return;
  
@@ -176,21 +185,31 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   //Drop the chess piece back onto the chess board
  
   public void mouseReleased(MouseEvent e) {
-  if(chessPiece == null) return;
+  if(isValidMove(e.getX(), e.getY(), chessPiece.getName())){  
+       if(chessPiece == null) return;
  
-  chessPiece.setVisible(false);
-  Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+       chessPiece.setVisible(false);
+       Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
  
-  if (c instanceof JLabel){
-  Container parent = c.getParent();
-  parent.remove(0);
-  parent.add( chessPiece );
+       if (c instanceof JLabel){
+       Container parent = c.getParent();
+       parent.remove(0);
+       parent.add( chessPiece );
+       }
+       else {
+       Container parent = (Container)c;
+       parent.add( chessPiece );
+       }
   }
-  else {
-  Container parent = (Container)c;
-  parent.add( chessPiece );
+  //to do add else statement to return piece if move is not valid
+   //needs fixed piece disappears if not valid
+  else{
+	  chessPiece.setLocation(xAdjustment, yAdjustment);
+	  Component c = chessBoard.findComponentAt(e.getX(), e.getY());
+	  Container parent= c.getParent();
+	  parent.add(chessPiece); 
+	  
   }
- 
   chessPiece.setVisible(true);
   }
  
