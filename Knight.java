@@ -25,6 +25,7 @@ public class Knight extends JPanel{
 		knightJbt = new JLabel(knightIcon);
 		knightJbt.setSize(100, 100);
 		knightJbt.setOpaque(false);
+		knightJbt.setName("Knight");
 
 	}
 
