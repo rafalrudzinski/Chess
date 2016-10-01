@@ -24,6 +24,7 @@ public class King extends JPanel{
 		kingJbt = new JLabel(kingIcon);
 		kingJbt.setSize(100, 100);
 		kingJbt.setOpaque(false);
+		kingJbt.setName("King");
 
 	}
 
