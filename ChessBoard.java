@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.*;
 import javax.swing.*;
  
 public class ChessBoard extends JFrame implements MouseListener, MouseMotionListener {
@@ -10,6 +9,9 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   JLabel chessPiece;
   int xAdjustment;
   int yAdjustment;
+  int oldX;
+  int oldY;
+  int playerTurn=1;
  
   public ChessBoard() throws IOException{
   Dimension boardSize = new Dimension(600, 600);
@@ -149,24 +151,129 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   
   
   }
-  public boolean isValidMove(int x, int y, String name){
+  /*
+   * keep track of the player's turns
+   */
+  public int playerTurn(){
+	  if (playerTurn==1){
+		  playerTurn=2;
+	  }
+	  else if(playerTurn==2){
+		  playerTurn=1;
+	  }
+	  return playerTurn;
+  }
+  /*
+   * check is the piece moves are valid
+   */
+  public boolean isValidMove(int oldx, int oldy, int newx, int newy, String name){
 	  boolean move = false;
+	  Component a = chessBoard.getComponentAt(oldx, oldy);
+	  Component b =chessBoard.getComponentAt(newx, newy);
+	  Point p = a.getLocation();
+	  Point q = b.getLocation();
+	  
 	  if (name.equals("Pawn")){
+		  if(p.getX()== q.getX()){
+			  if(p.getY()-q.getY()==75){
+				  move = true;
+			  }
+			  else if(q.getY()-p.getY()==75){
+				  move = true;
+			  }
+		  }
+		  else{
+			  move = false;
+		  }
+	  }
+	  else if(name.equals("Rook")){
+		  if(p.getX()==q.getX()){
+			  move=true;
+		  }
+		  else if(p.getY()==q.getY()){
+			  move=true;
+		  }
+		  else{
+			  move=false;
+		  }
+		  
+	  }
+	  else if(name.equals("Knight")){
+		  if(p.getX()+q.getX()==150 && p.getY()+q.getY()==75){
+			  move = true;
+		  }
+		  else if(p.getX()+q.getX()==150 && p.getY()-q.getY() == 75){
+			  move = true;
+		  }
+		  else if(p.getX()+q.getX()==75 && p.getY()-q.getY()==150){
+			  move=true;
+		  }
+		  else if(p.getX()+q.getX()==75 && p.getY()+q.getY() == 150){
+			  move = true;
+	      }
+		  
+		  else if(p.getX()-q.getX()==150 && p.getY()+q.getY() == 75){
+			  move = true;
+		  }
+		  else if(p.getX()-q.getX()==150 && p.getY()-q.getY()==75){
+			  move=true;
+		  }
+		  else if(p.getX()-q.getX()==75 && p.getY()-q.getY() == 150){
+			  move = true;
+	      }
+		  else if(p.getX()-q.getX()==75 && p.getY()+q.getY() == 150){
+			  move = true;
+	      }
+		  else{
+			  move=false;
+		  }
+	  }
+	  else if(name.equals("Bishop")){
+		  if(p.getX()==q.getX()){
+			  move=false;
+		  }
+		  else if(p.getY()==q.getY()){
+			  move = false;
+		  }
+		  else{
+			  move=true;
+		  }
+	  }
+	  else if(name.equals("King")){
+		  if(p.getX()+q.getX()==75&& p.getY()==q.getY()){
+			  move=true;
+		  }
+		  else if(p.getX()-q.getX()==75 && p.getY() == q.getY()){
+			  move=true;
+		  }
+		  else if(p.getX()==q.getX() && p.getY()+q.getY()==75){
+			  move=true;
+		  }
+		  else if(p.getX()==q.getX() && p.getY()-q.getY()==75){
+			  move=true;
+		  }
+		  else{
+			move=false;  
+		  }
+		  
+	  }
+	  else if(name.equals("Queen")){
 		  move = true;
 	  }
-	  
 	  return move;
   }
  
   public void mousePressed(MouseEvent e){
   chessPiece = null;
     Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-    
+    oldX=e.getX();
+    oldY=e.getY();
   String name = c.getName();
   if (c instanceof JPanel) 
   return;
  
   Point parentLocation = c.getParent().getLocation();
+  
   xAdjustment = parentLocation.x - e.getX();
   yAdjustment = parentLocation.y - e.getY();
   chessPiece = (JLabel)c;
@@ -185,7 +292,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   //Drop the chess piece back onto the chess board
  
   public void mouseReleased(MouseEvent e) {
-  if(isValidMove(e.getX(), e.getY(), chessPiece.getName())){  
+  if(isValidMove(oldX, oldY, e.getX(), e.getY(), chessPiece.getName())){  
        if(chessPiece == null) return;
  
        chessPiece.setVisible(false);
@@ -200,15 +307,26 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
        Container parent = (Container)c;
        parent.add( chessPiece );
        }
+       playerTurn();
   }
   //to do add else statement to return piece if move is not valid
-   //needs fixed piece disappears if not valid
+  //needs fixed piece disappears
   else{
-	  chessPiece.setLocation(xAdjustment, yAdjustment);
-	  Component c = chessBoard.findComponentAt(e.getX(), e.getY());
-	  Container parent= c.getParent();
-	  parent.add(chessPiece); 
+	  if(chessPiece == null) return;
 	  
+      chessPiece.setVisible(false);
+      Component c =  chessBoard.findComponentAt(oldX, oldY);
+
+      if (c instanceof JLabel){
+      Container parent = c.getParent();
+      parent.remove(0);
+      parent.add( chessPiece );
+      }
+      else {
+      Container parent = (Container)c;
+      parent.add( chessPiece );
+      }
+     
   }
   chessPiece.setVisible(true);
   }
