@@ -24,6 +24,7 @@ public class Queen extends JPanel{
 		queenJbt = new JLabel(queenIcon);
 		queenJbt.setSize(100, 100);
 		queenJbt.setOpaque(false);
+		queenJbt.setName("Queen");
 	}
 
 
@@ -34,4 +35,3 @@ public class Queen extends JPanel{
 		return queenJbt;
 	}
 }
-
