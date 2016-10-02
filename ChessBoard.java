@@ -218,10 +218,16 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 	   */
 	  if (name.equals("Pawn")){
 		  if(p.getX()== q.getX()){
-			  if(p.getY()-q.getY()==75){
+			  if(p.getY()-q.getY()==75){ // one square
 				  move = true;
 			  }
-			  else if(q.getY()-p.getY()==75){
+			  else if(q.getY()-p.getY()==75){ //one square
+				  move = true;
+			  }
+			  if(p.getY()-q.getY()==150){ // two squares
+				  move = true;
+			  }
+			  else if(q.getY()-p.getY()==150){ //two squares
 				  move = true;
 			  }
 		  }
