@@ -1,19 +1,18 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class Bishop extends JPanel{
 	int player = -1;
-	BufferedImage BishopImg;
 	JPanel bishop;
-	JLabel bishopJbt;
+	JLabel bishopLabel;
 	ImageIcon bishopIcon;
 
-
-	Bishop(int player) throws IOException{
+	/*
+	 * Create Bishop piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */
+	Bishop(int player) {
 		this.player = player;
 		if (this.player == 1) {
 			bishopIcon = new ImageIcon("images/d1_60x60_Bishop1.png");
@@ -22,15 +21,26 @@ public class Bishop extends JPanel{
 			bishopIcon = new ImageIcon("images/d1_60x60_Bishop2.png");
 		}
 
-		bishopJbt = new JLabel(bishopIcon);
-		bishopJbt.setSize(100, 100);
-		bishopJbt.setOpaque(false);
-		bishopJbt.setName("Bishop");
+		bishopLabel = new JLabel(bishopIcon);
+		bishopLabel.setSize(100, 100);
+		bishopLabel.setOpaque(false);
+		bishopLabel.setName("Bishop");
 	}
 
-	public void setBishop() throws IOException{
+	/*
+	 * create Bishop piece as JLabel with icon
+	 */
+	public void setBishop() {
+		bishopLabel = new JLabel(bishopIcon);
+		bishopLabel.setSize(100, 100);
+		bishopLabel.setOpaque(false);
+		bishopLabel.setName("Bishop");
 	}
+	
+	/*
+	 * return Bishop piece as JLabel with icon 
+	 */
 	public JLabel getBishop(){
-		return bishopJbt;
+		return bishopLabel;
 	}
 }
