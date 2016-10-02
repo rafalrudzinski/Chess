@@ -5,14 +5,14 @@ import javax.swing.*;
  
 public class ChessBoard extends JFrame implements MouseListener, MouseMotionListener {
   
-  JLayeredPane layeredPane;
-  JPanel chessBoard;
-  JLabel chessPiece;
-  int xAdjustment;
-  int yAdjustment;
-  int oldX;
-  int oldY;
-  int playerTurn=1;
+  JLayeredPane pane;
+  JPanel board;
+  JLabel piece;
+  int xAdj;
+  int yAdj;
+  int prevX;	
+  int prevY;	
+  int turn=1;	
    
   public ChessBoard() throws IOException{
   final Dimension boardSize = new Dimension(600, 600);
@@ -21,39 +21,37 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
    * create a layered pane for the board (Default_layer)
    * when pieces are dragged they get added to drag layer
    */
- layeredPane = new JLayeredPane();
-  getContentPane().add(layeredPane);
-  layeredPane.setPreferredSize(boardSize);
-  layeredPane.addMouseListener(this);
-  layeredPane.addMouseMotionListener(this);
+  pane = new JLayeredPane();
+  getContentPane().add(pane);
+  pane.setPreferredSize(boardSize);
+  pane.addMouseListener(this);
+  pane.addMouseMotionListener(this);
+  
   //Add a chess board to the Layered Pane 
- 
-  chessBoard = new JPanel();
-  layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
-  chessBoard.setLayout( new GridLayout(8, 8) );
-  chessBoard.setPreferredSize( boardSize );
-  chessBoard.setBounds(0, 0, boardSize.width, boardSize.height);
- /*
-  * create the chess board
-  * alternate between white and blue panels for the grid
-  * ASU colors!
+  board = new JPanel();
+  pane.add(board, JLayeredPane.DEFAULT_LAYER);
+  board.setLayout( new GridLayout(8, 8) );
+  board.setPreferredSize( boardSize );
+  board.setBounds(0, 0, boardSize.width, boardSize.height);
+  
+  /*
+   * create the chess board
+   * alternate between white and blue panels for the grid
+   * ASU colors.
   */
   for (int i = 0; i < 64; i++) {
-  JPanel box = new JPanel( new BorderLayout() );
-  chessBoard.add(box);
- 
-  int row = (i / 8) % 2;
-  if (row == 0)
-  box.setBackground( i % 2 == 0 ? Color.RED : Color.YELLOW );
-  else
-  box.setBackground( i % 2 == 0 ? Color.YELLOW : Color.RED );
+	  JPanel box = new JPanel( new BorderLayout() );
+	  board.add(box);
+	  int row = (i / 8) % 2;
+	  if (row == 0)
+		  box.setBackground( i % 2 == 0 ? Color.RED : Color.YELLOW );
+	  else
+		  box.setBackground( i % 2 == 0 ? Color.YELLOW : Color.RED );
   }
+  
   /*
    * Create the objects for Player 1 to start the game. 
    */
-  
-  
-  
   Pawn p1pawn1 = new Pawn(1,6,0);
   Pawn p1pawn2 = new Pawn(1,6,1);
   Pawn p1pawn3 = new Pawn(1,6,2);
@@ -70,10 +68,10 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   Bishop p1bishop2 = new Bishop(1);
   Queen p1queen = new Queen(1);
   King p1king = new King(1);
+   
   /*
    * Create the objects for Player 2 to start the game. 
    */
-
   Pawn p2pawn1 = new Pawn(2,1,0);
   Pawn p2pawn2 = new Pawn(2,1,1);
   Pawn p2pawn3 = new Pawn(2,1,2);
@@ -92,72 +90,76 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   Bishop p2bishop2 = new Bishop(2);
   
   
-  //Add player 2 pieces to board
-  JPanel panel = (JPanel)chessBoard.getComponent(0);
+  /*
+   * Add Player 2 pieces to board. 
+   */
+  JPanel panel = (JPanel)board.getComponent(0);
   panel.add(p2rook1.getRook());
-  panel = (JPanel)chessBoard.getComponent(1);
+  panel = (JPanel)board.getComponent(1);
   panel.add(p2knight1.getKnight());
-  panel = (JPanel)chessBoard.getComponent(2);
+  panel = (JPanel)board.getComponent(2);
   panel.add(p2bishop1.getBishop());
-  panel = (JPanel)chessBoard.getComponent(3);
+  panel = (JPanel)board.getComponent(3);
   panel.add(p2queen.getQueen());
-  panel = (JPanel)chessBoard.getComponent(4);
+  panel = (JPanel)board.getComponent(4);
   panel.add(p2king.getKing());
-  panel = (JPanel)chessBoard.getComponent(5);
+  panel = (JPanel)board.getComponent(5);
   panel.add(p2bishop2.getBishop());
-  panel = (JPanel)chessBoard.getComponent(6);
+  panel = (JPanel)board.getComponent(6);
   panel.add(p2knight2.getKnight());
-  panel = (JPanel)chessBoard.getComponent(7);
+  panel = (JPanel)board.getComponent(7);
   panel.add(p2rook2.getRook());
-  panel = (JPanel)chessBoard.getComponent(8);
+  panel = (JPanel)board.getComponent(8);
   panel.add(p2pawn1.getPawn());
-  panel = (JPanel)chessBoard.getComponent(9);
+  panel = (JPanel)board.getComponent(9);
   panel.add(p2pawn2.getPawn());
-  panel = (JPanel)chessBoard.getComponent(10);
+  panel = (JPanel)board.getComponent(10);
   panel.add(p2pawn3.getPawn());
-  panel = (JPanel)chessBoard.getComponent(11);
+  panel = (JPanel)board.getComponent(11);
   panel.add(p2pawn4.getPawn());
-  panel = (JPanel)chessBoard.getComponent(12);
+  panel = (JPanel)board.getComponent(12);
   panel.add(p2pawn5.getPawn());
-  panel = (JPanel)chessBoard.getComponent(13);
+  panel = (JPanel)board.getComponent(13);
   panel.add(p2pawn6.getPawn());
-  panel = (JPanel)chessBoard.getComponent(14);
+  panel = (JPanel)board.getComponent(14);
   panel.add(p2pawn7.getPawn());
-  panel = (JPanel)chessBoard.getComponent(15);
+  panel = (JPanel)board.getComponent(15);
   panel.add(p2pawn8.getPawn());
   
-//Add player 1 pieces to board
-  panel = (JPanel)chessBoard.getComponent(56);
+  /*
+   * Add Player 1 pieces to board. 
+   */
+  panel = (JPanel)board.getComponent(56);
   panel.add(p1rook1.getRook());
-  panel = (JPanel)chessBoard.getComponent(57);
+  panel = (JPanel)board.getComponent(57);
   panel.add(p1knight1.getKnight());
-  panel = (JPanel)chessBoard.getComponent(58);
+  panel = (JPanel)board.getComponent(58);
   panel.add(p1bishop1.getBishop());
-  panel = (JPanel)chessBoard.getComponent(59);
+  panel = (JPanel)board.getComponent(59);
   panel.add(p1queen.getQueen());
-  panel = (JPanel)chessBoard.getComponent(60);
+  panel = (JPanel)board.getComponent(60);
   panel.add(p1king.getKing());
-  panel = (JPanel)chessBoard.getComponent(61);
+  panel = (JPanel)board.getComponent(61);
   panel.add(p1bishop2.getBishop());
-  panel = (JPanel)chessBoard.getComponent(62);
+  panel = (JPanel)board.getComponent(62);
   panel.add(p1knight2.getKnight());
-  panel = (JPanel)chessBoard.getComponent(63);
+  panel = (JPanel)board.getComponent(63);
   panel.add(p1rook2.getRook());
-  panel = (JPanel)chessBoard.getComponent(48);
+  panel = (JPanel)board.getComponent(48);
   panel.add(p1pawn1.getPawn());
-  panel = (JPanel)chessBoard.getComponent(49);
+  panel = (JPanel)board.getComponent(49);
   panel.add(p1pawn2.getPawn());
-  panel = (JPanel)chessBoard.getComponent(50);
+  panel = (JPanel)board.getComponent(50);
   panel.add(p1pawn3.getPawn());
-  panel = (JPanel)chessBoard.getComponent(51);
+  panel = (JPanel)board.getComponent(51);
   panel.add(p1pawn4.getPawn());
-  panel = (JPanel)chessBoard.getComponent(52);
+  panel = (JPanel)board.getComponent(52);
   panel.add(p1pawn5.getPawn());
-  panel = (JPanel)chessBoard.getComponent(53);
+  panel = (JPanel)board.getComponent(53);
   panel.add(p1pawn6.getPawn());
-  panel = (JPanel)chessBoard.getComponent(54);
+  panel = (JPanel)board.getComponent(54);
   panel.add(p1pawn7.getPawn());
-  panel = (JPanel)chessBoard.getComponent(55);
+  panel = (JPanel)board.getComponent(55);
   panel.add(p1pawn8.getPawn());
   
   }
@@ -166,25 +168,25 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
    * keep track of the player's turns
    */
   public int playerTurn(){
-	  if (playerTurn==1){
-		  playerTurn=2;
+	  if (turn==1){
+		  turn=2;
 	  }
-	  else if(playerTurn==2){
-		  playerTurn=1;
+	  else if(turn==2){
+		  turn=1;
 	  }
-	  return playerTurn;
+	  return turn;
   }
+  
   /*
    * check is the piece moves are valid
    * return true if valid
    * false if not valid
    */
-  public boolean isValidMove(int oldx, int oldy, int newx, int newy, String name){
+  public boolean isValidMove(int oldx, int oldy, int newx, int newy, String name) {
 	  boolean move = false;
-	  Component a = chessBoard.getComponentAt(oldx, oldy);
-	  Component b =chessBoard.getComponentAt(newx, newy);
-	  Point p = a.getLocation();
-	  
+	  Component a = board.getComponentAt(oldx, oldy);
+	  Component b = board.getComponentAt(newx, newy);
+	  Point p = a.getLocation();	  
 	  Point q = b.getLocation();
 	  
 	  /*
@@ -205,6 +207,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 			  move = false;
 		  }
 	  }
+	  
 	  /*
 	   * check valid moves for the rook
 	   * straight in one direction
@@ -221,6 +224,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 		  }
 		  
 	  }
+	  
 	  /*
 	   * check for valid moves for the knight
 	   * either 1 up 2 across 
@@ -258,6 +262,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 			  move=false;
 		  }
 	  }
+	  
 	  /*
 	   * check for valid move for the bishop
 	   */
@@ -272,6 +277,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 			  move=true;
 		  }
 	  }
+	  
 	  /*
 	   * check for valid move for the king
 	   */
@@ -293,6 +299,7 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 		  }
 		  
 	  }
+	  
 	  /*
 	   * check for valid moves for the queen
 	   */
@@ -306,26 +313,28 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
 	  
 	  return move;
   }
+  
+  
  /*
   * on mouse pressed get the chess piece at that location
   */
   public void mousePressed(MouseEvent e){
-  chessPiece = null;
-    Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-    oldX=e.getX();
-    oldY=e.getY();
+  piece = null;
+    Component c =  board.findComponentAt(e.getX(), e.getY());
+    prevX=e.getX();
+    prevY=e.getY();
   String name = c.getName();
   if (c instanceof JPanel) 
      return;
  
   Point parentLocation = c.getParent().getLocation();
   
-  xAdjustment = parentLocation.x - e.getX();
-  yAdjustment = parentLocation.y - e.getY();
-  chessPiece = (JLabel)c;
-  chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-  chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
-  layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+  xAdj = parentLocation.x - e.getX();
+  yAdj = parentLocation.y - e.getY();
+  piece = (JLabel)c;
+  piece.setLocation(e.getX() + xAdj, e.getY() + yAdj);
+  piece.setSize(piece.getWidth(), piece.getHeight());
+  pane.add(piece, JLayeredPane.DRAG_LAYER);
   }
  
   /*
@@ -333,91 +342,91 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
    */
   
   public void mouseDragged(MouseEvent me) {
-  if (chessPiece == null) return;
- chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
+  if (piece == null) return;
+ piece.setLocation(me.getX() + xAdj, me.getY() + yAdj);
  }
  
   /*
-   *on mouse released get the position where the mouse is released 
+   * on mouse released get the position where the mouse is released 
    * call isValidMove() 
    * with the locations of where the piece started at
    * and the new location
    * if move is valid drop the piece at the new location
    * else return the piece to previous location   
    */
- 
   public void mouseReleased(MouseEvent e) {
 	  
-	  if(chessPiece== null){
+	  if(piece== null){
 		  return;
 	  }
-	  else if(chessBoard == null){
+	  else if(board == null){
 
-	      chessPiece.setVisible(false);
-	      Component c =  chessBoard.findComponentAt(oldX, oldY);
+	      piece.setVisible(false);
+	      Component c =  board.findComponentAt(prevX, prevY);
 
 	      if (c instanceof JLabel){
 	      Container parent = c.getParent();
 	      parent.remove(0);
-	      parent.add( chessPiece );
+	      parent.add( piece );
 	      }
 	      else {
 	      Container parent = (Container)c;
-	      parent.add( chessPiece );
+	      parent.add( piece );
 	      }
 	  }
 	  
-	  else if(isValidMove(oldX, oldY, e.getX(), e.getY(), chessPiece.getName())){  
-       if(chessPiece == null) return;
+	  else if(isValidMove(prevX, prevY, e.getX(), e.getY(), piece.getName())){  
+       if(piece == null) return;
  
-       chessPiece.setVisible(false);
-       Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+       piece.setVisible(false);
+       Component c =  board.findComponentAt(e.getX(), e.getY());
  
        if (c instanceof JLabel){
        Container parent = c.getParent();
        parent.remove(0);
-       parent.add( chessPiece );
+       parent.add( piece );
        }
        else {
        Container parent = (Container)c;
-       parent.add( chessPiece );
+       parent.add( piece );
        }
        playerTurn();
   }
-  //return piece to original location
-  else if(!isValidMove(oldX, oldY, e.getX(), e.getY(), chessPiece.getName())){
-	  if(chessPiece == null) return;
 	  
-      chessPiece.setVisible(false);
-      Component c =  chessBoard.findComponentAt(oldX, oldY);
+  //return piece to original location
+  else if(!isValidMove(prevX, prevY, e.getX(), e.getY(), piece.getName())){
+	  if(piece == null) return;
+	  
+      piece.setVisible(false);
+      Component c =  board.findComponentAt(prevX, prevY);
 
       if (c instanceof JLabel){
       Container parent = c.getParent();
       parent.remove(0);
-      parent.add( chessPiece );
+      parent.add( piece );
       }
       else {
       Container parent = (Container)c;
-      parent.add( chessPiece );
+      parent.add( piece );
       }
       
   }
   else{
   }
-  chessPiece.setVisible(true);
+  piece.setVisible(true);
   }
  
   public void mouseClicked(MouseEvent e) {
   
   }
   public void mouseMoved(MouseEvent e) {
- }
+  }
+  
   public void mouseEntered(MouseEvent e){
   
   }
+  
   public void mouseExited(MouseEvent e) {
   
-  }
- 
-  
+  } 
 }
