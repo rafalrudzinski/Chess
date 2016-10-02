@@ -1,19 +1,18 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
 public class Queen extends JPanel{
 	int player = -1;
-	BufferedImage queenImg;
 	JPanel queen;
-	JLabel queenJbt;
+	JLabel queenLabel;
 	ImageIcon queenIcon;
 
-	Queen(int player) throws IOException{
+	/*
+	 * Create Queen piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */
+	Queen(int player) {
 		this.player = player;
 		if (this.player == 1) {
 			queenIcon = new ImageIcon("images/d1_60x60_Queen1.png");
@@ -21,17 +20,26 @@ public class Queen extends JPanel{
 		else if (this.player == 2) {
 			queenIcon = new ImageIcon("images/d1_60x60_Queen2.png");
 		}
-		queenJbt = new JLabel(queenIcon);
-		queenJbt.setSize(100, 100);
-		queenJbt.setOpaque(false);
-		queenJbt.setName("Queen");
+		queenLabel = new JLabel(queenIcon);
+		queenLabel.setSize(100, 100);
+		queenLabel.setOpaque(false);
+		queenLabel.setName("Queen");
 	}
 
-
-	public void setQueen() throws IOException{
+	/*
+	 * create Queen piece as JLabel with icon
+	 */
+	public void setQueen() {
+		queenLabel = new JLabel(queenIcon);
+		queenLabel.setSize(100, 100);
+		queenLabel.setOpaque(false);
+		queenLabel.setName("Queen");
 	}
 
+	/*
+	 * return Queen piece as JLabel with icon 
+	 */
 	public JLabel getQueen(){
-		return queenJbt;
+		return queenLabel;
 	}
 }
