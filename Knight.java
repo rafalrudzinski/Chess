@@ -1,19 +1,18 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-public class Knight extends JPanel{
+public class Knight extends JPanel {
 	int player = -1;
-	BufferedImage KnightImg;
     JPanel knight;
-	JLabel knightJbt;
+	JLabel knightLabel;
 	ImageIcon knightIcon;
 	
-
-	Knight(int player) throws IOException{
+	/*
+	 * Create Knight piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */
+	Knight(int player) {
 		this.player = player;
 		if (this.player == 1) {
 			knightIcon = new ImageIcon("images/d1_60x60_Knight1.png");
@@ -22,17 +21,27 @@ public class Knight extends JPanel{
 			knightIcon = new ImageIcon("images/d1_60x60_Knight2.png");
 		}
 		
-		knightJbt = new JLabel(knightIcon);
-		knightJbt.setSize(100, 100);
-		knightJbt.setOpaque(false);
-		knightJbt.setName("Knight");
+		knightLabel = new JLabel(knightIcon);
+		knightLabel.setSize(100, 100);
+		knightLabel.setOpaque(false);
+		knightLabel.setName("Knight");
 
 	}
 
-	public void setKnight() throws IOException{
+	/*
+	 * create Kinght piece as JLabel with icon
+	 */
+	public void setKnight() {
+		knightLabel = new JLabel(knightIcon);
+		knightLabel.setSize(100, 100);
+		knightLabel.setOpaque(false);
+		knightLabel.setName("Knight");
 	}
 
+	/*
+	 * return Knight piece as JLabel with icon 
+	 */
 	public JLabel getKnight(){
-		return knightJbt;
+		return knightLabel;
 	}
 }
