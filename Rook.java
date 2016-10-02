@@ -1,20 +1,21 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class Rook extends JPanel{
 
 	int player = -1;
-	BufferedImage RookImg;
 	JPanel rook;
-	JLabel rookJbt;
-
+	JLabel rookLabel;
 	ImageIcon rookIcon;
 
-	Rook(int player) throws IOException{
+	/*
+	 * Create Rook piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */
+	Rook(int player) {
 		this.player = player;
 		if (this.player == 1) {
 			rookIcon = new ImageIcon("images/d1_60x60_Rook1.png");
@@ -23,17 +24,27 @@ public class Rook extends JPanel{
 			rookIcon = new ImageIcon("images/d1_60x60_Rook2.png");
 		}
 
-		rookJbt = new JLabel(rookIcon);
-		rookJbt.setSize(100, 100);
-		rookJbt.setOpaque(false);
-		rookJbt.setName("Rook");
+		rookLabel = new JLabel(rookIcon);
+		rookLabel.setSize(100, 100);
+		rookLabel.setOpaque(false);
+		rookLabel.setName("Rook");
 
 	}
 
-	public void setRook() throws IOException{
+	/*
+	 * create Rook piece as JLabel with icon
+	 */	
+	public void setRook() {
+		rookLabel = new JLabel(rookIcon);
+		rookLabel.setSize(100, 100);
+		rookLabel.setOpaque(false);
+		rookLabel.setName("Rook");
 	}
 
+	/*
+	 * return King piece as JLabel with icon 
+	 */
 	public JLabel getRook(){
-		return rookJbt;
+		return rookLabel;
 	}
 }
