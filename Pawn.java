@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 
+@SuppressWarnings("serial")
 public class Pawn extends JPanel{
 	int player = -1;
 	JPanel pawn;
@@ -20,11 +21,11 @@ public class Pawn extends JPanel{
         this.y=y;
 
 		if (this.player == 1) {
-			pawnIcon = new ImageIcon("images/d1_60x60_Pawn1.png");
+			pawnIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_Pawn1.png"));
 		}
 
 		else if (this.player == 2) {
-			pawnIcon = new ImageIcon("images/d1_60x60_Pawn2.png");
+			pawnIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_Pawn2.png"));
 		}
 
 		pawnLabel = new JLabel(pawnIcon);

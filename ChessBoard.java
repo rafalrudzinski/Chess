@@ -1,4 +1,3 @@
-
 /*
  * Title:  Chess Program
  * 
@@ -26,6 +25,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 
+@SuppressWarnings("serial")
 public class ChessBoard extends JFrame implements MouseListener, MouseMotionListener {
   
   //Define global variables used.
@@ -464,4 +464,3 @@ public class ChessBoard extends JFrame implements MouseListener, MouseMotionList
   } 
   
 } // End chessBoard class.
-

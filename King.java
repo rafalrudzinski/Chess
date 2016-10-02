@@ -2,6 +2,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class King extends JPanel{
 	int player = -1;
 	JPanel king;
@@ -15,10 +16,10 @@ public class King extends JPanel{
 	King(int player) {
 		this.player = player;
 		if (this.player == 1) {
-			kingIcon = new ImageIcon("images/d1_60x60_King1.png");
+			kingIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_King1.png"));
 		}
 		else if (this.player == 2) {
-			kingIcon = new ImageIcon("images/d1_60x60_King2.png");
+			kingIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_King2.png"));
 		}
 
 		kingLabel = new JLabel(kingIcon);

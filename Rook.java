@@ -18,10 +18,10 @@ public class Rook extends JPanel{
 	Rook(int player) {
 		this.player = player;
 		if (this.player == 1) {
-			rookIcon = new ImageIcon("images/d1_60x60_Rook1.png");
+			rookIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_Rook1.png"));
 		}
 		else if (this.player == 2) {
-			rookIcon = new ImageIcon("images/d1_60x60_Rook2.png");
+			rookIcon = new ImageIcon(Chess.class.getResource("/d1_60x60_Rook2.png"));
 		}
 
 		rookLabel = new JLabel(rookIcon);

@@ -1,4 +1,3 @@
-
 /*
  * Title:  Chess Program
  * 
@@ -97,4 +96,3 @@ class ListenerClass implements ActionListener{
 		
 	}
 } // End ListenerClass.
-
