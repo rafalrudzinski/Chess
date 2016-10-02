@@ -1,24 +1,20 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 
-
-
-
 public class Pawn extends JPanel{
 	int player = -1;
-	BufferedImage pawnImg;
 	JPanel pawn;
-	JLabel pawnJbt;
+	JLabel pawnLabel;
 	ImageIcon pawnIcon;
     int x,y;
         
-
-
-	Pawn(int player, int x, int y) throws IOException{
+    /*
+	 * Create Pawn piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */  
+	Pawn(int player, int x, int y) {
 		this.player = player;
         this.x=x;
         this.y=y;
@@ -31,43 +27,54 @@ public class Pawn extends JPanel{
 			pawnIcon = new ImageIcon("images/d1_60x60_Pawn2.png");
 		}
 
-
-		//JPanel pawn = new JPanel();
-		//pawn.setSize(100,100);
-
-
-
-		pawnJbt = new JLabel(pawnIcon);
-		pawnJbt.setSize(100, 100);
-		pawnJbt.setOpaque(false);
-	    pawnJbt.setName("Pawn");
-		//pawnJbt.setContentAreaFilled(false);
-		//pawnJbt.setBorderPainted(false);
-	   // pawnJbt.addActionListener(regListener);  // Register a listener for this button.
-
-
-
+		pawnLabel = new JLabel(pawnIcon);
+		pawnLabel.setSize(100, 100);
+		pawnLabel.setOpaque(false);
+	    pawnLabel.setName("Pawn");
 	}
 
-
-	public void setPawn() throws IOException{
+	/*
+	 * create Pawn piece as JLabel with icon
+	 */
+	public void setPawn() {
+		pawnLabel = new JLabel(pawnIcon);
+		pawnLabel.setSize(100, 100);
+		pawnLabel.setOpaque(false);
+	    pawnLabel.setName("Pawn");
 	}
-    public int getX(){
+	
+	/*
+	 * return x-coordinate
+	 */
+    public int getX() {
     	return x;
     }
-    public int getY(){
+    
+    /*
+	 * return y-coordinate
+	 */
+    public int getY() {
     	return y;
     }
-    public void setX(int x){
+    
+    /*
+	 * set x-coordinate
+	 */
+    public void setX(int x) {
     	this.x=x;
     }
-	public void setY(int y){
+    
+    /*
+	 * set y-coordinate
+	 */
+	public void setY(int y) {
 		this.y=y;
 	}
 
+	/*
+	 * return Pawn piece as JLabel with icon 
+	 */
 	public JLabel getPawn(){
-		return pawnJbt;
+		return pawnLabel;
 	}
-
-
 }
