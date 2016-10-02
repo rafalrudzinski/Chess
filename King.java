@@ -1,18 +1,18 @@
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class King extends JPanel{
 	int player = -1;
-	BufferedImage kingImg;
 	JPanel king;
-	JLabel kingJbt;
+	JLabel kingLabel;
 	ImageIcon kingIcon;
 	
-
-	King(int player) throws IOException{
+	/*
+	 * Create King piece, constructor receives int representing player1 or
+	 * player2 and creates piece with appropriate icon.
+	 */
+	King(int player) {
 		this.player = player;
 		if (this.player == 1) {
 			kingIcon = new ImageIcon("images/d1_60x60_King1.png");
@@ -21,19 +21,26 @@ public class King extends JPanel{
 			kingIcon = new ImageIcon("images/d1_60x60_King2.png");
 		}
 
-		kingJbt = new JLabel(kingIcon);
-		kingJbt.setSize(100, 100);
-		kingJbt.setOpaque(false);
-		kingJbt.setName("King");
-
-	}
-
-	public void setKing() throws IOException{
-	}
-
-	public JLabel getKing(){
-		return kingJbt;
+		kingLabel = new JLabel(kingIcon);
+		kingLabel.setSize(100, 100);
+		kingLabel.setOpaque(false);
+		kingLabel.setName("King");
 	}
 	
+	/*
+	 * create King piece as JLabel with icon
+	 */	
+	public void setKing() {
+		kingLabel = new JLabel(kingIcon);
+		kingLabel.setSize(100, 100);
+		kingLabel.setOpaque(false);
+		kingLabel.setName("King");
+	}
 
+	/*
+	 * return King piece as JLabel with icon 
+	 */
+	public JLabel getKing(){
+		return kingLabel;
+	}
 }
